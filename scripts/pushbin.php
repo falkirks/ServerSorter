@@ -17,6 +17,7 @@ foreach($scan as $f){
         copyDir(FOLDER . "server/bin", FOLDER . "server/$f/bin");
     }
     else{
+        if($f == "DevTools.phar") continue;
         print "$f shouldn't be here, should we delete it? (y/n)\n";
         if(isGood()){
             unlink($argv[0] . $f);

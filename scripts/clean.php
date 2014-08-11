@@ -5,6 +5,9 @@
  *  - Prompts deletion of unrelated folders and files
  *  - Moves misplaced servers to the server directory
  *  - Prompts moving plugins off main workspace in directory
+ *
+ * To work on:
+ *  - Delete plugin copies
  */
 $scan = scandir($argv[2]);
 foreach($scan as $f){
