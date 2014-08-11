@@ -9,7 +9,7 @@
  * To work on:
  *  - Delete plugin copies
  */
-$scan = scandir($argv[2]);
+$scan = scandir(FOLDER);
 foreach($scan as $f){
     if($f{0} == ".") continue;
     if(!is_dir(FOLDER . $f)){
@@ -38,7 +38,7 @@ foreach($scan as $f){
             }
         }
         else{
-            if($f != "server" && $f != "oldplugin" && $f != "plugin"){
+            if($f != "server" && $f != "oldplugin" && $f != "plugin" && $f != "build"){
                 print "Should we delete $f ? (y/n)\n";
                 if(isGood()){
                     recursiveDelete(FOLDER . $f);

@@ -1,6 +1,10 @@
 <?php
 /*
  * Pulls a fresh PocketMine version and installs it.
+ * Modes:
+ *  - dev (Pulls latest development build .phar; skip compile)
+ *  - beta (Pulls latest beta build .phar; skip compile)
+ *  - git (Performs a git clone on the PocketMine-MP, non packaged)
  */
 if(isset($argv[2])){
     if(!isset($argv[3])){
