@@ -7,11 +7,11 @@ define("CONFIG", "en\ny\nn\nServer: %9\n19132\n128\n0\n20\nn\nFalk\nn\nn\nn\ny\n
 if(isset($argv[2])){
     print "\033[37;40m[WRAPPER] Starting server process...\033[0m\n";
     print "\033[36;40m[INFO] Process can be terminated with 'stop' or restarted with 'restart'\n[INFO] Only stop commands orginating at the console will be accepted.\033[0m\n";
-    $descriptorspec = array(
-        0 => array("pipe", "r"),
-        1 => array("pipe", "w"),
-        2 => array("pipe", "a")
-    );
+    $descriptorspec = [
+        0 => ["pipe", "r"],
+        1 => ["pipe", "w"],
+        2 => ["pipe", "a"]
+    ];
     $handle = proc_open(FOLDER . "server/" . $argv[2] . "/start.sh", $descriptorspec,$pipes);
     $stdin = fopen('php://stdin', 'r');
     stream_set_blocking($stdin,0);
@@ -40,8 +40,10 @@ if(isset($argv[2])){
         else{
             $data = proc_get_status($handle);
             if(!$data["running"]){
+                beep();
                 print("\033[36;40m[INFO] Server has crashed, restarting server...\033[0m\n");
-                $handle = proc_open($dir . $argv[1] . "/start.sh", $descriptorspec,$pipes);
+                sleep(3);
+                $handle = proc_open(FOLDER . "server/" . $argv[2] . "/start.sh", $descriptorspec,$pipes);
                 stream_set_blocking($pipes[1],0);
             }
         }

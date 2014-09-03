@@ -65,3 +65,6 @@ function copyDir($src,$dst){
     }
     closedir($dir);
 }
+function beep(){
+    print "\x07";
+}
