@@ -1,8 +1,23 @@
 <?php
-define("FOLDER", "./Desktop/PocketMine/");
+define("FOLDER", "/Users/noahheyl/PocketMine/");
 require_once "functions.php";
-if(isset($argv[1])){
-    if(is_file(__DIR__ . "/scripts/" . $argv[1] . ".php")) require_once("scripts/" . $argv[1] . ".php");
-    else die("Command not found.\n");
+require_once "autoload.php";
+array_shift($argv);
+if(isset($argv[0])){
+    $class = strtolower($argv[0]);
+    if(class_exists($class)) {
+        $command = new $class();
+        if ($command instanceof CommandInterface) {
+            array_shift($argv);
+            $command->execute($argv);
+        } else {
+            Logger::error("That is not a command.");
+        }
+    }
+    else{
+        Logger::error("Command not found.");
+    }
 }
-else die("You must specify an action.\n");
+else{
+    Logger::error("You must specify an action.");
+}
