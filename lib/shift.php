@@ -15,7 +15,7 @@ class shift implements CommandInterface{
                 Logger::error("Server not found.");
                 return;
             }
-            if(is_dir(FOLDER . "server/" . $args[1] . "/plugins/" . $args[1])){
+            if(is_dir(FOLDER . "server/" . $args[1] . "/plugins/" . $args[0])){
                 recursiveDelete(FOLDER . "server/" . $args[1] . "/plugins/" . $args[0]);
             }
             copyDir(FOLDER . $args[0], FOLDER . "server/" . $args[1] . "/plugins/" . $args[0]);
