@@ -7,7 +7,7 @@ class pkg implements CommandInterface{
                 Logger::info("Packaging plugin...");
                 @mkdir(FOLDER . $args[0] . "/out");
                 $description = new PluginDescription(file_get_contents(FOLDER . $args[0] . "/plugin.yml"));
-                $pharPath = FOLDER . $args[0] . "/out/" . $description->getName() ."_" . $description->getVersion() . ".phar";
+                $pharPath = FOLDER . $args[0] . "/out/" . $description->getName() ."_v" . $description->getVersion() . ".phar";
                 $phar = new Phar($pharPath);
                 $phar->setMetadata([
                     "name" => $description->getName(),
@@ -18,9 +18,9 @@ class pkg implements CommandInterface{
                     "description" => $description->getDescription(),
                     "authors" => $description->getAuthors(),
                     "website" => $description->getWebsite(),
-                    "creationDate" => filemtime(FOLDER . $args[0] . "/plugin.yml")
+                    "creationDate" => time()
                 ]);
-                $phar->setStub('<?php echo "PocketMine-MP plugin ' . $description->getName() . ' v' . $description->getVersion() . '\n----------------\n";if(extension_loaded("phar")){$phar = new \Phar(__FILE__);foreach($phar->getMetadata() as $key => $value){echo ucfirst($key).": ".(is_array($value) ? implode(", ", $value):$value)."\n";}} __HALT_COMPILER();');
+                $phar->setStub('<?php echo "PocketMine-MP plugin ' . $description->getName() . ' v' . $description->getVersion() . '\n----------------\n";if(extension_loaded("phar")){$phar = new \Phar(__FILE__);foreach($phar->getMetadata() as $key => $value){echo ucfirst($key).": ".(is_array($value) ? implode(", ", $value):$value)."\n";}' . file_get_contents(__DIR__ . "/../data/update.php") . '}__HALT_COMPILER();');
                 $phar->setSignatureAlgorithm(\Phar::SHA1);
                 $phar->startBuffering();
                 $filePath = FOLDER . $args[0];
