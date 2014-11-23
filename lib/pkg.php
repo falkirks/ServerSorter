@@ -2,6 +2,7 @@
 
 class pkg implements CommandInterface{
     public function execute(array $args){
+        date_default_timezone_set("UTC");
         if(isset($args[0])) {
             if(is_dir(FOLDER . $args[0]) && file_exists(FOLDER . $args[0] . "/plugin.yml")){
                 Logger::info("Packaging plugin...");
@@ -18,7 +19,7 @@ class pkg implements CommandInterface{
                     "description" => $description->getDescription(),
                     "authors" => $description->getAuthors(),
                     "website" => $description->getWebsite(),
-                    "creationDate" => time()
+                    "creationDate" => strtotime("now")
                 ]);
                 $phar->setStub('<?php echo "PocketMine-MP plugin ' . $description->getName() . ' v' . $description->getVersion() . '\n----------------\n";if(extension_loaded("phar")){$phar = new \Phar(__FILE__);foreach($phar->getMetadata() as $key => $value){echo ucfirst($key).": ".(is_array($value) ? implode(", ", $value):$value)."\n";}' . file_get_contents(__DIR__ . "/../data/update.php") . '}__HALT_COMPILER();');
                 $phar->setSignatureAlgorithm(\Phar::SHA1);
