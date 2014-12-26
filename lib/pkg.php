@@ -27,7 +27,7 @@ class pkg implements CommandInterface{
                 $filePath = FOLDER . $args[0];
                 foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($filePath)) as $file) {
                     $path = ltrim(str_replace(array("\\", $filePath), array("/", ""), $file), "/");
-                    if ($path{0} === "." || strpos($path, "/.") !== false) {
+                    if ($path{0} === "." || strpos($path, "/.") !== false || explode("/", $path)[0] === "out") {
                         continue;
                     }
                     Logger::info("Adding $file");
